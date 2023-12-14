@@ -1,0 +1,81 @@
+[
+    {
+      "_id": "html-custom-recursive-2023-11-22",
+      "domain": "html_custom_recursive",
+      "version": "2023-11-22",
+      "index_definition": {
+        "index_type": "IVF_FLAT",
+        "metric_type": "IP",
+        "params": {
+          "nlist": 128
+        },
+        "semantic_configuration_name": "semantic_configuration"
+      },
+      "embedding_model_class": "TransformerEmbeddings",
+      "embedding_class_args": {
+        "tokenizer_path": "tokenizer-msmarco-bert-base-dpr-v5-updated",
+        "document_embedding_path": "onnx-msmarco-bert-base-dot-v5",
+        "query_embedding_path": "onnx-msmarco-bert-base-dpr-v5"
+      },
+      "file_loader_class_name": "JSONLoaderWithHtml",
+      "loader_kwargs": {
+        "content_key": "BW_Article_Details__c",
+        "jq_schema": ".",
+        "metadata_func": "care_metadata",
+        "text_content": false,
+        "remove_all_tags": false,
+        "html_custom_decompose": [
+            "img",
+            "script"]
+        ,
+        "html_tags_to_unwrap": [
+          "p",
+          "li",
+          "h4",
+          "h5",
+          "h6",
+          "ul",
+          "ol",
+          "a",
+          "span",
+          "div"
+        ]
+      },
+      "splitter_class_name": "HTMLSectionSplitter",
+      "splitter_kwargs": {
+        "chunk_size": 1400,
+        "chunk_overlap": 350,
+        "separators": [
+          "\n",
+          ".",
+          ""
+        ],
+        "headers_to_split_on": [
+          [
+            "h1",
+            "Header 1"
+          ],
+          [
+            "h2",
+            "Header 2"
+          ],
+          [
+            "h3",
+            "Header 3"
+          ]
+        ]
+      },
+      "llm_class_name": "AzureChatOpenAI",
+      "llm_kwargs": {
+        "deployment_name": "gpt-4-32k",
+        "temperature": 0,
+        "max_tokens": 3000,
+        "verbose": true,
+        "model_version": "0314"
+      },
+      "chain_type": "stuff",
+      "k_milvus": 20,
+      "search_db_type": "azure_cognitive_search",
+      "prompt": "You are a helpful AI assistant whose primary goal is to help AT&T customer support agents using a provided context. Use the context delimited by triple backticks to answer the question at the end. Provide step by step instructions if available. First find the relevant information and then answer the question based on the relevant information. DO NOT ANSWER any question outside of the provided context. \n```{context}```\n\nQuestion: {question}?\n Helpful Answer:"
+    }
+  ]

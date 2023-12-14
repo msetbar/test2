@@ -1,0 +1,97 @@
+#### Experiment 0(Baseline)
+Use default JSONLoaderWithHtml with no unwrapped tags and no remove_all_tags; use RecursiveCharacterTextSplitter with chunk_size 1500, chunk overlap 375
+
+```json
+// care_baseline-2023-10-25
+"file_loader_class_name": "JSONLoaderWithHtml", "splitter_class_name": "RecursiveCharacterTextSplitter", "splitter_kwargs": {"chunk_size": 1500, "chunk_overlap": 375},
+```
+
+exp_id: `33d642c4-3f36-421f-b28f-e032446f50f0`
+
+#### Experiment 1
+
+Use JSONLoaderWithHtml with default unwrapped tags (p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, span, div); use HTMLSectionSplitter with chunk_size 1500, chunk overlap 375, and headers to split h1, h2, h3. Separator '\n'.
+
+```json
+// care_cog_no_unwraptags-2023-11-16
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 1500, "chunk_overlap": 375, "separator": "\n", "headers_to_split_on": [["h1", "Header 1"], ["h2", "Header 2"], ["h3", "Header 3"]]},
+```
+
+exp_id: `73f0052e-763c-4320-882a-87d3693cf349`
+
+#### Experiment 2
+
+Use JSONLoaderWithHtml with unwrapped tags (p, h4, h5, h6, a, span, em); use HTMLSectionSplitter with chunk_size 1500, chunk overlap 375, and headers to split h1, h2, h3. No separator.
+
+```json
+// care_cog_no_separators-2023-11-16
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false, "html_tags_to_unwrap": ["h4", "h5", "h6", "a", "span", "em"]}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 1500, "chunk_overlap": 375, "headers_to_split_on": [["h1", "Header 1"], ["h2", "Header 2"], ["h3", "Header 3"]]},
+```
+
+exp_id: `c93d982d-425c-4297-aa1c-f7b83f62eaec`
+
+#### Experiment 3
+
+Use JSONLoaderWithHtml default unwrapped tags (p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, span, div); use HTMLSectionSplitter with chunk_size 1450, chunk overlap 360, and headers to split h1, h2, h3. Separators '.', '\n'.
+
+```json
+// care-cog-no-unwraptags-regex-separator-chunk-size-1450-2023-11-16
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 1450, "chunk_overlap": 360, "separator": "[.\n]+", "is_separator_regex": true, "headers_to_split_on": [["h1", "Header 1"], ["h2", "Header 2"], ["h3", "Header 3"]]},
+```
+
+exp_id: `adee2fd3-3dae-49da-9deb-240c862ea54f`
+
+#### Experiment 4
+
+Use JSONLoaderWithHtml default unwrapped tags (p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, span, div); use HTMLSectionSplitter with chunk_size 750, chunk overlap 187, and headers to split h1, h2, h3. Separator '\n'.
+
+```json
+// care_cog_no_unwraptags_chunk_size_750-2023-11-16
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 750, "chunk_overlap": 187, "separator": "\n", "headers_to_split_on": [["h1", "Header 1"], ["h2", "Header 2"], ["h3", "Header 3"]]},
+```
+
+exp_id: `059eda6a-4a15-4f7b-8fe1-adef61e33f34`
+
+#### Experiment 5
+
+Use JSONLoaderWithHtml default unwrapped tags (p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, span, div); use HTMLSectionSplitter with chunk_size 1400, chunk overlap 370, and headers to split h1. Separator '\n'.
+
+```json
+// care_cog_no_unwraptags_and_reduced_chunks_1400-2023-11-16
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 1400, "chunk_overlap": 370, "separator": "\n", "headers_to_split_on": [["h1", "Header 1"]]},
+```
+
+exp_id: `4445dc3c-b984-4fef-beba-bb79d1e10c9f`
+
+#### Experiment 6
+
+Use JSONLoaderWithHtml default unwrapped tags (p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, span, div); use HTMLSectionSplitter with chunk_size 1500, chunk overlap 375, and headers to split h1, h2, h3, div. Separators '.', '\n'.
+
+```json
+// care_cog_no_unwraptags_regex_separator_split_h1_h2_h3_div
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 1500, "chunk_overlap": 375, "separator": "[.\n]+", "is_separator_regex": true, "headers_to_split_on": [["h1", "Header 1"], ["h2", "Header 2"], ["h3", "Header 3"], ["div", "Divisor"]]},
+```
+
+exp_id: `59bfd055-8800-4d44-85a8-d3c30a6a5a40`
+
+#### Experiment 7
+
+Use JSONLoaderWithHtml default unwrapped tags (p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, span, div); use HTMLSectionSplitter with chunk_size 1500, chunk overlap 375, and headers to split h1, h2, h3, div. Separators '.', '\n'.
+
+```json
+// care_cog_no_unwraptags_regex_separator_split_h1
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 1500, "chunk_overlap": 375, "separator": "[.\n]+", "is_separator_regex": true, "headers_to_split_on": [["h1", "Header 1"]]},
+```
+
+exp_id: `e719883c-02ed-4893-b313-942730d7a09f`
+
+#### Experiment 8
+
+Use JSONLoaderWithHtml default unwrapped tags (p, h1, h2, h3, h4, h5, h6, li, ul, ol, a, span, div); use HTMLSectionSplitter with chunk_size 1500, chunk overlap 375, and headers to split h1, h2, h3. Separators ' ', '.', '\n'.
+
+```json
+// care_cog_no_unwraptags_regex_separator_with_whitespace
+"file_loader_class_name": "JSONLoaderWithHtml", "loader_kwargs": {"content_key": "BW_Article_Details__c", "jq_schema": ".", "metadata_func": "care_metadata", "text_content": false, "remove_all_tags": false}, "splitter_class_name": "HTMLSectionSplitter", "splitter_kwargs": {"chunk_size": 1500, "chunk_overlap": 375, "separator": "[ .\n]+", "is_separator_regex": true, "headers_to_split_on": [["h1", "Header 1"], ["h2", "Header 2"], ["h3", "Header 3"]]},
+```
+
+exp_id: `b59b7c75-5675-4fb0-aff3-cc416278d540`

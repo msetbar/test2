@@ -1,0 +1,47 @@
+{
+
+    "_id" : "sh_8998-2023-10-11",
+    "domain" : "sh_8998",
+    "version" : "2023-10-11",
+    "index_definition" : {
+        "index_type" : "IVF_FLAT",
+        "metric_type" : "IP",
+        "params" : {
+            "nlist" : 128
+        }
+    },
+    "embedding_model_class" : "TransformerEmbeddings",
+    "embedding_class_args": {
+        "tokenizer_path": "tokenizer-msmarco-bert-base-dpr-v5-updated",
+        "document_embedding_path": "onnx-msmarco-bert-base-dot-v5",
+        "query_embedding_path": "onnx-msmarco-bert-base-dpr-v5"
+    },
+    "file_loader_class_name" : "UnstructuredHTMLLoader",
+    "splitter_class_name" : "TokenTextSplitter",
+    "splitter_kwargs" : {
+
+        "chunk_size" : 1000,
+        "chunk_overlap" : 100
+
+    },
+    "llm_class_name" : "AzureChatOpenAI",
+    "llm_kwargs" : {
+
+        "deployment_name" : "gpt-4-32k",
+        "temperature" : 0,
+        "max_tokens" : 3000,
+        "verbose" : true,
+        "model_version" : "0314"
+
+    },
+    "chain_type" : "stuff",
+    "loader_kwargs" : {
+
+    },
+    "reranker_class_name" : "CrossEncoder",
+    "reranker_class_args" : {
+        "model_name": "./local_models/crossencoders/ms-marco-MiniLM-L-12-v2"
+    },
+    "k_milvus" : 10,
+    "k_reranker" : 5
+}

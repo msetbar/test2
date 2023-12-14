@@ -1,0 +1,40 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "inputs": [
+        {
+            "id": "subFlow",
+            "type": "promptString",
+            "description": "The sub-folder to write the data to under the ./output folder.",
+            "default": "cckm"
+        }
+    ],
+    "configurations": [
+        {
+            "name": "Python: Run Experiment",
+            "type": "python",
+            "request": "launch",
+            "module": "run_experiment",
+            "cwd": "${workspaceFolder}/src/evaluation_framework",
+            "justMyCode": false,
+        },
+        {
+            "name": "Python: CCKM Ingest",
+            "type": "python",
+            "request": "launch",
+            "module": "main",
+            "cwd": "${workspaceFolder}/src/cckm_snowflake_ingest",
+            "justMyCode": true,
+            "args": [
+                "--sub-folder",
+                "${input:subFlow}"
+            ],
+            "env": {
+                "HTTP_PROXY": "",
+                "HTTPS_PROXY": ""
+            }
+        }
+    ]
+}
